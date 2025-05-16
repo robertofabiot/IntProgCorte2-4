@@ -1,6 +1,7 @@
 # Programa para simular el uso de computadoras en dos laboratorios
 # Permite ingresar 'o' para Ocupada y 'l' para Libre como abreviaciones
 
+from date import datetime
 # Definición de dimensiones de los laboratorios
 filas = 5  # Número de filas en cada laboratorio
 columnas = 4  # Número de computadoras por fila
@@ -61,6 +62,6 @@ for i, laboratorio in enumerate(laboratorios):
     print(f"\nEstado completo del Laboratorio {i + 1}:")
     for fila in laboratorio:
         # Mostrar el estado de cada fila, separando los estados con " | "
-        print(" | ".join(fila))
+        print(" | ".join(fila)) 
     print()  # Línea en blanco para mejor legibilidad
 # Fin del programa
