@@ -1,56 +1,62 @@
-def obtener_estado_pc(fila, columna, laboratorio_num):
-    # Función para obtener el estado de una computadora en un laboratorio específico
-    while True:
-        # Solicita al usuario que ingrese el estado de la computadora
-        estado = input(f"Ingrese el estado de la computadora en Laboratorio {laboratorio_num}, fila {fila + 1}, columna {columna + 1} (Ocupada/Libre): ").strip().lower()
-        # Verifica si la entrada es válida
-        if estado in ['ocupada', 'libre']:
-            return 'Ocupada' if estado == 'ocupada' else 'Libre'
-        else:
-            print("Entrada inválida. Por favor ingrese 'Ocupada' o 'Libre'.")
+# Programa para simular el uso de computadoras en dos laboratorios sin usar funciones def
 
-def contar_computadoras(laboratorio):
-    # Función para contar cuántas computadoras están ocupadas y cuántas están libres
-    ocupadas = sum(estado == 'Ocupada' for fila in laboratorio for estado in fila)
-    libres = sum(estado == 'Libre' for fila in laboratorio for estado in fila)
-    return ocupadas, libres
+# Definición de dimensiones de los laboratorios
+filas = 5  # Número de filas en cada laboratorio
+columnas = 4  # Número de computadoras por fila
+num_laboratorios = 2  # Número de laboratorios
+laboratorios = []  # Lista para guardar los estados de los laboratorios
 
-def main():
-    # Definimos las dimensiones de los laboratorios
-    filas = 5
-    columnas = 4
-    num_laboratorios = 2
-    laboratorios = []  # Lista para almacenar los laboratorios
+# Ciclo para ingresar datos de cada laboratorio
+for lab in range(1, num_laboratorios + 1):
+    print(f"\nIngresando datos para el Laboratorio {lab}:")
+    laboratorio = []  # Lista para almacenar el estado de las computadoras en este laboratorio
+    for fila in range(filas):
+        fila_estado = []  # Lista para almacenar el estado de las computadoras en esta fila
+        for col in range(columnas):
+            # Validar el estado de la computadora ingresado por el usuario
+            while True:
+                # Solicitar al usuario que ingrese el estado de la computadora
+                estado = input(f"Ingrese el estado de la computadora en Laboratorio {lab}, fila {fila + 1}, columna {col + 1} (Ocupada/Libre): ").strip().lower()
+                # Verificar si la entrada es válida
+                if estado in ['ocupada', 'libre']:
+                    # Asignar el estado correspondiente
+                    estado_pc = 'Ocupada' if estado == 'ocupada' else 'Libre'
+                    break  # Salir del bucle si la entrada es válida
+                else:
+                    # Mensaje de error si la entrada no es válida
+                    print("Entrada inválida. Por favor ingrese 'Ocupada' o 'Libre'.")
+            # Agregar el estado de la computadora a la fila
+            fila_estado.append(estado_pc)
+        # Agregar la fila completa al laboratorio
+        laboratorio.append(fila_estado)
+    # Agregar el laboratorio completo a la lista de laboratorios
+    laboratorios.append(laboratorio)
 
-    # Ciclo para ingresar datos de cada laboratorio
-    for lab in range(1, num_laboratorios + 1):
-        print(f"\nIngresando datos para el Laboratorio {lab}:")
-        laboratorio = []  # Lista para almacenar el estado de las computadoras en el laboratorio
-        for fila in range(filas):
-            fila_estado = []  # Lista para almacenar el estado de las computadoras en la fila
-            for col in range(columnas):
-                # Llama a la función para obtener el estado de cada computadora
-                estado_pc = obtener_estado_pc(fila, col, lab)
-                fila_estado.append(estado_pc)  # Agrega el estado a la fila
-            laboratorio.append(fila_estado)  # Agrega la fila al laboratorio
-        laboratorios.append(laboratorio)  # Agrega el laboratorio a la lista de laboratorios
+# Mostrar resumen del uso de computadoras
+print("\nResumen del uso de computadoras:")
 
-    print("\nResumen del uso de computadoras:")
+# Ciclo para mostrar el resumen de cada laboratorio
+for i, laboratorio in enumerate(laboratorios):
+    ocupadas = 0  # Contador para computadoras ocupadas
+    libres = 0  # Contador para computadoras libres
+    # Contar computadoras ocupadas y libres en el laboratorio
+    for fila in laboratorio:
+        for estado in fila:
+            if estado == 'Ocupada':
+                ocupadas += 1  # Incrementar contador de ocupadas
+            else:
+                libres += 1  # Incrementar contador de libres
+    # Mostrar el resumen para el laboratorio actual
+    print(f"\nLaboratorio {i + 1}:")
+    print(f"Computadoras Ocupadas: {ocupadas}")
+    print(f"Computadoras Libres: {libres}")
 
-    # Ciclo para mostrar el resumen de cada laboratorio
-    for i, laboratorio in enumerate(laboratorios):
-        ocupadas, libres = contar_computadoras(laboratorio)  # Cuenta las computadoras ocupadas y libres
-        print(f"\nLaboratorio {i + 1}:")
-        print(f"Computadoras Ocupadas: {ocupadas}")
-        print(f"Computadoras Libres: {libres}")
-
-    # Mostrar estado detallado opcional
-    for i, laboratorio in enumerate(laboratorios):
-        print(f"\nEstado completo del Laboratorio {i + 1}:")
-        for fila in laboratorio:
-            print(" | ".join(fila))  # Muestra el estado de cada fila
-        print()
-
-# Punto de entrada del programa
-if __name__ == "__main__":
-    main()
+# Mostrar el estado completo de cada laboratorio
+for i, laboratorio in enumerate(laboratorios):
+    print(f"\nEstado completo del Laboratorio {i + 1}:")
+    for fila in laboratorio:
+        # Mostrar el estado de cada fila, separando los estados con " | "
+        print(" | ".join(fila))
+    print()  # Línea en blanco para mejor legibilidad
+# Fin del programa
+# Este programa permite ingresar el estado de las computadoras en dos laboratorios y muestra un resumen del uso de computadoras.
