@@ -1,4 +1,5 @@
-# Programa para simular el uso de computadoras en dos laboratorios sin usar funciones def
+# Programa para simular el uso de computadoras en dos laboratorios
+# Permite ingresar 'o' para Ocupada y 'l' para Libre como abreviaciones
 
 # Definición de dimensiones de los laboratorios
 filas = 5  # Número de filas en cada laboratorio
@@ -10,23 +11,27 @@ laboratorios = []  # Lista para guardar los estados de los laboratorios
 for lab in range(1, num_laboratorios + 1):
     print(f"\nIngresando datos para el Laboratorio {lab}:")
     laboratorio = []  # Lista para almacenar el estado de las computadoras en este laboratorio
+    contador_pc = 1  # Contador para número de computadora en el laboratorio
     for fila in range(filas):
         fila_estado = []  # Lista para almacenar el estado de las computadoras en esta fila
         for col in range(columnas):
             # Validar el estado de la computadora ingresado por el usuario
             while True:
-                # Solicitar al usuario que ingrese el estado de la computadora
-                estado = input(f"Ingrese el estado de la computadora en Laboratorio {lab}, fila {fila + 1}, columna {col + 1} (Ocupada/Libre): ").strip().lower()
-                # Verificar si la entrada es válida
-                if estado in ['ocupada', 'libre']:
-                    # Asignar el estado correspondiente
-                    estado_pc = 'Ocupada' if estado == 'ocupada' else 'Libre'
-                    break  # Salir del bucle si la entrada es válida
+                # Solicitar al usuario que ingrese el estado de la computadora con número secuencial
+                estado = input(f"Ingrese el estado de la computadora #{contador_pc} en Laboratorio {lab}, fila {fila + 1}, columna {col + 1} (Ocupada[o]/Libre[l]): ").strip().lower()
+                # Verificar si la entrada es válida (acepta 'o', 'ocupada', 'l', 'libre')
+                if estado in ['o', 'ocupada']:
+                    estado_pc = 'Ocupada'
+                    break  # Entrada válida, salir del bucle
+                elif estado in ['l', 'libre']:
+                    estado_pc = 'Libre'
+                    break  # Entrada válida, salir del bucle
                 else:
                     # Mensaje de error si la entrada no es válida
-                    print("Entrada inválida. Por favor ingrese 'Ocupada' o 'Libre'.")
+                    print("Entrada inválida. Por favor ingrese 'o' para Ocupada o 'l' para Libre.")
             # Agregar el estado de la computadora a la fila
             fila_estado.append(estado_pc)
+            contador_pc += 1  # Incrementar contador de computadoras
         # Agregar la fila completa al laboratorio
         laboratorio.append(fila_estado)
     # Agregar el laboratorio completo a la lista de laboratorios
@@ -59,4 +64,3 @@ for i, laboratorio in enumerate(laboratorios):
         print(" | ".join(fila))
     print()  # Línea en blanco para mejor legibilidad
 # Fin del programa
-# Este programa permite ingresar el estado de las computadoras en dos laboratorios y muestra un resumen del uso de computadoras.
